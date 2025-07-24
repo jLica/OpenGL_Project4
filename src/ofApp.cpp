@@ -21,9 +21,15 @@ void ofApp::buildMesh(ofMesh& mesh, float w, float h, glm::vec3 pos) {
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofDisableArbTex();
-	buildMesh(charMesh, 0.25, 0.5, glm::vec3(0.0, 0.15, 0.0));
+	ofEnableDepthTest();
+
+	buildMesh(charMesh, 0.1, 0.175, glm::vec3(0.0, -0.25, 0.0));
+	buildMesh(backgroundMesh, 1.0, 1.0, glm::vec3(0.0, 0.0, 0.5));
+
 	alienImg.load("alien.png");
-	charShader.load("vertex.vert", "fragment.frag");
+	backgroundImg.load("forest.png");
+
+	shader.load("vertex.vert", "fragment.frag");
 }
 
 //--------------------------------------------------------------
@@ -33,10 +39,15 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	charShader.begin();
-	charShader.setUniformTexture("alien", alienImg, 0);
+	shader.begin();
+
+	shader.setUniformTexture("myTexture", alienImg, 0);
 	charMesh.draw();
-	charShader.end();
+
+	shader.setUniformTexture("myTexture", backgroundImg, 0);
+	backgroundMesh.draw();
+
+	shader.end();
 }
 
 //--------------------------------------------------------------
