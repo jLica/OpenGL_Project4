@@ -22,11 +22,16 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		
 	private:
+		ofShader shader;
+		ofShader cloudShader;
+
 		ofMesh charMesh;
 		ofMesh backgroundMesh;
-		ofShader shader;
+		ofMesh cloudMesh;
+
 		ofImage alienImg;
 		ofImage backgroundImg;
+		ofImage cloudImg;
 		
 		void buildMesh(ofMesh& mesh, float w, float h, glm::vec3 pos);
 };
