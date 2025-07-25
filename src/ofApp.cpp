@@ -26,10 +26,12 @@ void ofApp::setup(){
 	buildMesh(charMesh, 0.1, 0.175, glm::vec3(0.0, -0.25, 0.0));
 	buildMesh(backgroundMesh, 1.0, 1.0, glm::vec3(0.0, 0.0, 0.5));
 	buildMesh(cloudMesh, 0.25, 0.167, glm::vec3(-0.55, 0.0, 0.0));
+	buildMesh(sunMesh, 1.0, 1.0, glm::vec3(0.0, 0.0, 0.4));
 
 	alienImg.load("alien.png");
 	backgroundImg.load("forest.png");
 	cloudImg.load("cloud.png");
+	sunImg.load("sun.png");
 
 	shader.load("vertex.vert", "fragment.frag");
 	cloudShader.load("vertex.vert", "cloud.frag");
@@ -42,6 +44,10 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	// --- 1. draw opaque objects ---
+	ofDisableBlendMode();
+	glDepthMask(true);
+
 	shader.begin();
 
 	shader.setUniformTexture("myTexture", alienImg, 0);
@@ -52,12 +58,24 @@ void ofApp::draw(){
 
 	shader.end();
 
+	// --- 2. draw translucent objects ---
+	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ALPHA);
+	glDepthMask(false);
+
 	cloudShader.begin();
 
 	cloudShader.setUniformTexture("myTexture", cloudImg, 0);
 	cloudMesh.draw();
 
+	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ADD);
+
+	cloudShader.setUniformTexture("myTexture", sunImg, 0);
+	sunMesh.draw();
+
 	cloudShader.end();
+
+	glDepthMask(true);
+	ofDisableBlendMode();
 }
 
 //--------------------------------------------------------------

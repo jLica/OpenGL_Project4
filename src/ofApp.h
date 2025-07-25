@@ -28,10 +28,12 @@ class ofApp : public ofBaseApp{
 		ofMesh charMesh;
 		ofMesh backgroundMesh;
 		ofMesh cloudMesh;
+		ofMesh sunMesh;
 
 		ofImage alienImg;
 		ofImage backgroundImg;
 		ofImage cloudImg;
+		ofImage sunImg;
 		
 		void buildMesh(ofMesh& mesh, float w, float h, glm::vec3 pos);
 };
