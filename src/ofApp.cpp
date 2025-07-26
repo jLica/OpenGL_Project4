@@ -32,9 +32,15 @@ void ofApp::setup(){
 	backgroundImg.load("forest.png");
 	cloudImg.load("cloud.png");
 	sunImg.load("sun.png");
+	walkingAlienImg.load("walk_sheet.png");
 
 	shader.load("vertex.vert", "fragment.frag");
 	cloudShader.load("vertex.vert", "cloud.frag");
+	spritesheetShader.load("spritesheet.vert", "fragment.frag");
+
+	spritesheetShader.begin();
+	spritesheetShader.setUniform2f("size", glm::vec2(0.28, 0.19));
+	spritesheetShader.end();
 }
 
 //--------------------------------------------------------------
@@ -44,21 +50,31 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	// --- 1. draw opaque objects ---
+	// --- 1. draw opaque objects but character---
 	ofDisableBlendMode();
 	glDepthMask(true);
 
 	shader.begin();
 
-	shader.setUniformTexture("myTexture", alienImg, 0);
-	charMesh.draw();
+	//shader.setUniformTexture("myTexture", alienImg, 0);
+	//charMesh.draw();
 
 	shader.setUniformTexture("myTexture", backgroundImg, 0);
 	backgroundMesh.draw();
 
 	shader.end();
 
-	// --- 2. draw translucent objects ---
+	// --- 2. draw character ---
+	spritesheetShader.begin();
+
+	frame = (frame > 10) ? 0 : frame + 1;
+	spritesheetShader.setUniform2f("offset", glm::vec2(frame % 3, frame / 3));
+	spritesheetShader.setUniformTexture("myTexture", walkingAlienImg, 0);
+	charMesh.draw();
+
+	spritesheetShader.end();
+
+	// --- 3. draw translucent objects ---
 	ofEnableBlendMode(ofBlendMode::OF_BLENDMODE_ALPHA);
 	glDepthMask(false);
 

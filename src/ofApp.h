@@ -24,6 +24,7 @@ class ofApp : public ofBaseApp{
 	private:
 		ofShader shader;
 		ofShader cloudShader;
+		ofShader spritesheetShader;
 
 		ofMesh charMesh;
 		ofMesh backgroundMesh;
@@ -34,6 +35,10 @@ class ofApp : public ofBaseApp{
 		ofImage backgroundImg;
 		ofImage cloudImg;
 		ofImage sunImg;
+		ofImage walkingAlienImg;
+
+		int frame;
+		static constexpr int MAX_FRAME = 100;
 		
 		void buildMesh(ofMesh& mesh, float w, float h, glm::vec3 pos);
 };

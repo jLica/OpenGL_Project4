@@ -7,5 +7,5 @@ out vec4 outColor;
 
 void main() {
     outColor = texture(myTexture, fragUV);
-    if(outColor.a < 1.0) discard;
+    if(outColor.a < 0.8) discard;
 }
