@@ -50,21 +50,18 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	// --- 1. draw opaque objects but character---
+	// --- 1. draw opaque objects except for the character---
 	ofDisableBlendMode();
 	glDepthMask(true);
 
 	shader.begin();
-
-	//shader.setUniformTexture("myTexture", alienImg, 0);
-	//charMesh.draw();
 
 	shader.setUniformTexture("myTexture", backgroundImg, 0);
 	backgroundMesh.draw();
 
 	shader.end();
 
-	// --- 2. draw character ---
+	// --- 2. draw the character ---
 	spritesheetShader.begin();
 
 	frame = (frame > 10) ? 0 : frame + 1;
